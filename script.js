@@ -73,7 +73,7 @@ let drawPoints = () => {
      .attr('data-yvalue', item => new Date(item['Seconds'] * 1000))
      .attr('cx', item => xSc(item['Year']))
      .attr('cy', item => ySc(new Date(item['Seconds'] * 1000)))
-     .on('mouseover', item => {
+     .on('mouseover', (event, item) => {
         tooltip.transition().style('visibility', 'visible');
         item['Doping'] 
           ? tooltip.text(item['Name'] + ':' + item['Nationality'] + ' ' +
@@ -81,6 +81,8 @@ let drawPoints = () => {
           : tooltip.text(item['Name'] + ':' + item['Nationality'] + ' ' +
           'Year:' + item['Year'] + ' Time:' + item['Time']);
         tooltip.attr('data-year', item['Year']);
+        tooltip.style('left', (event.pageX + 10) + 'px')
+                .style('top', (event.pageY - 28) + 'px');
       })
      .on('mouseout', item => tooltip.transition().style('visibility', 'hidden'));
 }
